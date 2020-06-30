@@ -47,12 +47,11 @@ class UserProfileView(LoginRequiredMixin, CreateView):
     form_class = forms.UserProfileForm
     login_url = reverse_lazy('login')
     template_name = 'registration/profile.html'
-    
+    pk_url_kwarg = 'pk'
 
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     model = models.User
     fields = ('username','first_name','last_name','email')
     template_name = 'registration/profile_update.html'
-    success_url = reverse_lazy('profile')
     pk_url_kwarg = 'pk'

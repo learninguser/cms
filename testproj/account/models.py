@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from PIL import Image
+from django.urls import reverse
 
 # Create your models here.
 class User(AbstractUser):
@@ -23,3 +24,7 @@ class User(AbstractUser):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.pic.path)
+    
+    def get_absolute_url(self):
+        return reverse("profile", kwargs={"pk": self.pk})
+    
