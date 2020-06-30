@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block css-content %}
+<link rel="stylesheet" href="{% static 'blog/css/post_detail.css' %}" type="text/css">
+{% endblock css-content %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10">
+                <h1 class="col post-title">{{ post.title }}</h1>
+                <div class="col mb-4">
+                    by
+                    <a href="{% url 'profile' post.author.id %}" class="text-decoration-none">{{ post.author }}</a>
+                    <hr>
+                    <p>Published on {{ post.published_date|date:"F d, Y" }} </p>
+                    <hr>
+                    {% if post.image %}
+                        <img class="card-image-top" src="{{ post.image.url }}" alt="Card image cap">
+                    {% else %}
+                        <img class="card-image-top" src="https://edyoda.s3.amazonaws.com/media/blog-images/edyoda_WxvDSK1.jpg" alt="Card image cap">
+                    {% endif %}
+                    <hr>
+                    <div style="text-align: justify;">
+                        {{ post.content|safe }}
+                    </div>
+                </div>
+                {% if user.is_authenticated %}
+                    <button type="button" class="btn btn-link"><a href="{% url 'editpost' post.slug %}">Edit</a></button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
