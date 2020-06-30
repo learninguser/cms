@@ -1,1 +1,3 @@
-testproj/db.sqlite3
+**/__pycache__
+testproj/account/migrations/**
+testproj/blog/migrations/**

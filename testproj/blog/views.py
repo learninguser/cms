@@ -7,6 +7,7 @@ from blog.forms import PostForm
 from django.utils.text import slugify
 from django.db.models import Q
 
+
 class HomeView(generic.ListView):
     model = models.Post
     queryset = models.Post.objects.filter(status="P")
@@ -55,6 +56,7 @@ def search(request):
 #             return models.Post.objects.filter(
 #         Q(title__icontains=query) | Q(content__icontains=query))
 #         return models.Post.objects.all()
+
 
 class PostView(generic.DetailView):
     '''
@@ -110,10 +112,10 @@ class PostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UserPassesTest
     template_name = 'blog/createpost.html'
     slug_url_kwarg = 'slug'
 
-    # def get_success_url(self):
-    #     if self.object.slug:
-    #         slug = self.object.slug
-    #     return reverse('blog', kwargs={'slug': slug})
+    def get_success_url(self):
+        if self.object.slug:
+            slug = self.object.slug
+        return reverse('blog', kwargs={'slug': slug})
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -133,3 +135,29 @@ class PostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UserPassesTest
             return True
         else:
             return False
+
+
+# class PostDeleteView(LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+#     permission_required = 'blog.change_post'
+#     login_url = reverse_lazy('login')
+#     model = models.Post
+#     success_url = reverse_lazy('home')
+
+#     def get_queryset(self):
+#         post = models.Post.objects.get(slug=self.kwargs.get('slug'))
+#         owner = self.request.user
+#         return self.model.objects.filter(author=owner)
+    
+#     def get_success_message(self, cleaned_data):
+#         title = cleaned_data.get('title')
+#         return (f"Post with {title} is deleted successfully")
+
+#     def test_func(self, *args, **kwargs):
+#         '''
+#             To restrict an user to edit a post which he authored
+#         '''
+#         post = models.Post.objects.get(slug=self.kwargs.get('slug'))
+#         if post.author == self.request.user:
+#             return True
+#         else:
+#             return False

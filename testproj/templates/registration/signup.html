@@ -24,6 +24,6 @@
         {{ form.pic|as_crispy_field }}
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
-    <span>Already have an account? <a href="{% url 'login' %}">Sign in</a>.</span>
+    <span class="float-right">Already have an account? <a href="{% url 'login' %}">Sign in</a>.</span>
 </form>
 {% endblock content %}

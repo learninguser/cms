@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 # Create your models here.
 
